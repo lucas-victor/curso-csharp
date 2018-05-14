@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using RevendedoraCarros;
 
 namespace RevendedoraCarros.Dominio
 {
@@ -11,7 +12,6 @@ namespace RevendedoraCarros.Dominio
         public string modelo { get; set; }
         public int ano { get; set; }
         public double precoBasico { get; set; }
-        public double precoCompleto { get; private set; }
         public Marca marca { get; set; }
         public List<Acessorio> acessorios { get; set; }
 
@@ -26,40 +26,39 @@ namespace RevendedoraCarros.Dominio
             this.acessorios = new List<Acessorio>();
         }
 
-        public void precoTotal()
+        public double precoTotal()
         {
             //O preço total de um carro é a soma de seu preço básico mais os preços de seus acessórios
+            double somaTotal = precoBasico;
 
-            foreach (var carro in Program.carrosS)
+            for (int i = 0; i < acessorios.Count; i++)
             {
-                double soma = 0.0;
-                soma = carro.precoBasico;
-                for (int i = 0; i < acessorios.Count; i++)
-                {
-                    if (carro.acessorios != null)
-                    {
-                        soma += acessorios[i].preco;
-                    }
-
-                }
-                precoCompleto = soma;
+                somaTotal += acessorios[i].preco;
             }
+            return somaTotal;
         }
 
-        public int CompareTo(object obj)
+        public static void imprimirAcessorios(int codCarro)
         {
-            Carro c = (Carro)obj;
-
-            int aux = modelo.CompareTo(c.modelo);
-            if (aux != 0)
+            Console.WriteLine("Acessórios: ");
+            foreach (var carro in Program.carrosS)
             {
-                return aux;
+                if (codCarro == carro.codigo)
+                {
+                    for (int i = 0; i < carro.acessorios.Count; i++)
+                    {
+                        if (carro.acessorios[i] != null)
+                        {
+                            Console.WriteLine(carro.acessorios[i].ToString());
+                        }
+                    }
+                }
             }
-            return -precoCompleto.CompareTo(c.precoCompleto);
         }
 
         public override string ToString()
         {
+
             String s;
 
             s = codigo
@@ -70,29 +69,30 @@ namespace RevendedoraCarros.Dominio
                 + ", Preço Básico: "
                 + precoBasico.ToString("F2", CultureInfo.InvariantCulture)
                 + ", Preço Total: "
-                + precoCompleto.ToString("F2", CultureInfo.InvariantCulture)
-                + "\n Acessórios: ";
+                + precoTotal().ToString("F2", CultureInfo.InvariantCulture);
+
             //+ //falta colocar a lista de acessorios
 
-            foreach (var carro in Program.carrosS)
-            {
-                if (carro.acessorios != null)
-                {
-                    for (int i = 0; i < carro.acessorios.Count; i++)
-                    {
-                        s += acessorios[i];
-                    }
 
-                }
-            }
             return s;
-            /*
 
-            Acessórios:
-              Engate, Preço: 200.00
-             */
         }
 
+        public int CompareTo(object obj)
+        {
+            Carro outro = (Carro)obj;
+            int aux = modelo.CompareTo(outro.modelo);
 
+            if (aux != 0)
+            {
+                return aux;
+            }
+
+            return -precoTotal().CompareTo(outro.precoTotal());
+
+        }
     }
+
+
 }
+

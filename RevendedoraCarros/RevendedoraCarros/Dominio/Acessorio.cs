@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace RevendedoraCarros.Dominio
 {
@@ -20,13 +16,19 @@ namespace RevendedoraCarros.Dominio
             this.carro = carro;
         }
 
+        public Acessorio(string descricao, double preco)
+        {
+            this.descricao = descricao;
+            this.preco = preco;
+            // this.carro = carro;
+        }
+
+
         public override string ToString()
         {
             return descricao
-                + ", Preco:"
-                + preco
-                + ", carro: "
-                + carro
+                + ", Preco: "
+                + preco.ToString("F2", CultureInfo.InvariantCulture);
                 ;
         }
     }

@@ -11,8 +11,7 @@ namespace RevendedoraCarros
     {
         public static List<Marca> marcasS = new List<Marca>();
         public static List<Carro> carrosS = new List<Carro>();
-        
-                                
+
         static void Main(string[] args)
         {
             int opcao = 0;
@@ -27,6 +26,10 @@ namespace RevendedoraCarros
             Carro C4 = new Carro(104, "Cruze", 2016, 30000.00, M2);
             Carro C5 = new Carro(105, "Cobalt", 2015, 25000.00, M2);
             Carro C6 = new Carro(106, "Cobalt", 2015, 35000.00, M2);
+            
+            //instanciando acessorios na lista de acessorios do carro C5.
+            C5.acessorios.Add(new Acessorio("engate", 200.00));
+            C5.acessorios.Add(new Acessorio("Antena", 100.00));
            
             //adicionando marcas na lista.
             marcasS.Add(M1);
@@ -66,17 +69,23 @@ namespace RevendedoraCarros
                 }
                 else if (opcao == 3)
                 {
-
+                    //cadastrar um marca;
+                    Tela.cadastrarMarca();
                 }
                 else if (opcao == 4)
                 {
+                    // cadastrar um carro;
+                    Tela.cadastrarCarro();
                 }
                 else if (opcao == 5)
                 {
+                    //cadastrar acessorio;
+                    Tela.cadastrarAcessorio();
                 }
                 else if (opcao == 6)
                 {
-
+                    //mostrar detalhes de um carro:
+                    Tela.listarDetalhesUmCarro();
                 }
                 else if (opcao == 7)
                 {
