@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RevendedoraCarros;
+using RevendedoraCarros.Dominio;
 
 namespace RevendedoraCarros.Dominio
 {
@@ -21,6 +21,11 @@ namespace RevendedoraCarros.Dominio
             carros = new List<Carro>();
         }
 
+        public void addCarro(Carro c)
+        {
+            carros.Add(c);
+            carros.Sort();
+        }
 
         public override string ToString()
         {
@@ -30,7 +35,8 @@ namespace RevendedoraCarros.Dominio
                 + ", "
                 + "País: "
                 + pais
-                + ", "
+                + ", Números de carros: "
+                + carros.Count;
                 ;
         }
 
